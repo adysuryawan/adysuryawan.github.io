@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Building ADK Agent with AGY and agents-cli | AgenticLearning</title>
+  <meta name="description" content="A complete training curriculum on building enterprise agents with Google Antigravity, ADK 2.0, and Agents CLI.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo-link">
+        <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+        <span>AgenticLearning</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="resources.html" class="active">Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="article-container">
+      
+      <!-- Table of Contents Sidebar -->
+      <aside class="sidebar-toc">
+        <div class="toc-title">On This Page</div>
+        <ul>
+          <li><a href="#module-1" class="active">1. Cloud Setup</a></li>
+          <li><a href="#module-2">2. ADK 2.0 Architecture</a></li>
+          <li><a href="#module-3">3. Agents CLI Outer-Loop</a></li>
+          <li><a href="#module-4">4. Specifying in plan.md</a></li>
+          <li><a href="#module-5">5. Scaffolding via AGY</a></li>
+          <li><a href="#module-6">6. Testing with Playground</a></li>
+          <li><a href="#module-7">7. Static Analysis & Linting</a></li>
+          <li><a href="#module-8">8. Agent Evaluations</a></li>
+          <li><a href="#module-9">9. Cloud Deployment</a></li>
+          <li><a href="#module-10">10. App Registration</a></li>
+        </ul>
+      </aside>
+
+      <!-- Article Content -->
+      <article class="article-content">
+        <header class="article-header">
+          <div class="article-meta">
+            <span>Tutorial</span>
+            <span>&bull;</span>
+            <span>20 min read</span>
+          </div>
+          <h1 class="article-title">Building ADK Agent with AGY and agents-cli</h1>
+          <p class="article-desc">Spec-Driven AI Agent Development: A Complete Training Curriculum for building enterprise agents with Google Antigravity, ADK 2.0, and Agents CLI.</p>
+        </header>
+
+        <div class="article-body">
+          <section id="module-1">
+            <h2>Module 1: Introduction to Gemini Antigravity & Agent Platform Cloud Setup</h2>
+            <p>This module establishes the foundational environment. Gemini Antigravity acts as your interactive natural language developer surface (available as a full desktop app or a lightweight terminal TUI via the Antigravity CLI), while Google Cloud's Agent Platform provides the enterprise infrastructure.</p>
+
+            <h3>Google Cloud Project Setup</h3>
+            <p>To orchestrate, validate, and track agent behavior, you must establish a secure connection to your Google Cloud infrastructure.</p>
+            <ul>
+              <li><strong>Required API:</strong> Enable the <strong>Agent Platform API</strong> (<code>agentplatform.googleapis.com</code>) in your Google Cloud Console project.</li>
+              <li><strong>Required IAM Roles:</strong> Ensure your user account or service account possesses the following Identity and Access Management (IAM) permissions:
+                <ul>
+                  <li><code>roles/agentplatform.admin</code> or <code>roles/agentplatform.developer</code>: Allows full creation, deployment, version management, and execution capabilities.</li>
+                  <li><code>roles/aiplatform.user</code>: Grants permission to call underlying Vertex AI and Gemini models.</li>
+                  <li><code>roles/logging.viewer</code> and <code>roles/monitoring.viewer</code>: Essential for downstream observability and log analysis.</li>
+                </ul>
+              </li>
+            </ul>
+
+            <h3>Workspace Initialization & Installation</h3>
+            <p>Follow these steps to deploy and authenticate your environment:</p>
+            <ol>
+              <li>
+                <strong>Download the Antigravity Application:</strong>
+                <p>Navigate to the official Google Antigravity internal or distribution page. Download the appropriate binary bundle for your operating system:</p>
+                <ul>
+                  <li><strong>macOS:</strong> Download the <code>.dmg</code> installer or execute via Homebrew if available in your enterprise tap: <code>brew install google-antigravity</code>.</li>
+                  <li><strong>Windows:</strong> Execute the <code>.msi</code> standalone executable installer or configure the binary in your local environment path.</li>
+                  <li><strong>Linux:</strong> Extract the <code>.tar.gz</code> binary distribution bundle and map the launcher to your shell path.</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Perform Agent Platform Login:</strong>
+                <p>Launch Antigravity or execute the Antigravity CLI tool via your terminal terminal wrapper <code>/launch</code>. Complete the browser-based OAuth flow using your corporate or enterprise Google Cloud credentials. Once authorized, bind your local terminal context to your target cloud infrastructure:</p>
+                <pre><code>gcloud config set project YOUR_PROJECT_ID</code></pre>
+              </li>
+            </ol>
+          </section>
+
+          <section id="module-2">
+            <h2>Module 2: The Google ADK 2.0 Framework Architecture</h2>
+            <p>Before writing agent configuration code, you must understand the underlying framework. <strong>Google ADK 2.0 (Agent Development Kit)</strong> is an open-source, code-first Python framework explicitly built for multi-agent systems, structured execution graphs, and deterministic workflow routing.</p>
+
+            <h3>Source & Documentation Discovery</h3>
+            <p>The source-of-truth repositories and structural patterns are maintained on Google's GitHub workspace:</p>
+            <ul>
+              <li><strong>Core Repository:</strong> <code>github.com/google/adk-python</code></li>
+              <li><strong>Official Documentation Surface:</strong> Full structural paths, code examples, and workflow specifications are hosted directly via the companion site <code>google.github.io/adk-docs/</code>.</li>
+            </ul>
+
+            <h3>ADK 1.x vs ADK 2.0 Paradigm Shift</h3>
+            <p>ADK 2.0 introduces breaking modular changes over 1.x, moving away from loose functional configurations into a rigid, graph-based execution engine.</p>
+            <ul>
+              <li>Key concepts focus on <code>Workflow</code> configurations and a definitive <code>Agent</code> schema.</li>
+              <li>Structural multi-agent handoffs are handled through a native Task API instead of raw text parsing loops, ensuring that agent states can be serialized, resumed, and managed atomically.</li>
+            </ul>
+          </section>
+
+          <section id="module-3">
+            <h2>Module 3: Enterprise Outer-Loop Lifecycle with Agents CLI</h2>
+            <p>While the developer's "inner loop" focuses on the local IDE and Antigravity workspace prompting (writing code, testing quick snippets), enterprise readiness demands a robust <strong>outer loop</strong>. This handles multi-agent orchestration, continuous evaluation, deterministic building, zero-downtime deployments, and runtime observation at scale (the enterprise agentic harness).</p>
+
+            <h3>Repository & Multi-Environment Installation</h3>
+            <p>The developer tooling patterns can be discovered at <code>github.com/google/agents-cli</code>. The CLI abstracts complex deployment targets into clean local workflows.</p>
+
+            <h4>Step 1: Install Prerequisite Package Tooling</h4>
+            <p>To ensure fast, isolated, and highly reproducible dependency structures, <code>agents-cli</code> utilizes <code>uv</code> as its primary underlying package manager.</p>
+            <ul>
+              <li>
+                <strong>macOS/Linux:</strong>
+                <pre><code>curl -LsSf https://astral.sh/uv/install.sh | sh</code></pre>
+              </li>
+              <li>
+                <strong>Windows:</strong>
+                <pre><code>powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"</code></pre>
+              </li>
+            </ul>
+
+            <h4>Step 2: Execute Global Setup</h4>
+            <p>Do not install manually via standard global pip. Use <code>uvx</code> (the transient execution wrapper provided natively by <code>uv</code>) to download and configure the system layout:</p>
+            <pre><code>uvx google-agents-cli setup</code></pre>
+            <p>This setups the <code>agents-cli</code> binary globally, exposing specialized operational capabilities directly to your coding workspace.</p>
+
+            <h4>Step 3: Verify Active Capabilities in Antigravity</h4>
+            <p>Open your Antigravity panel or TUI and query your current environment capabilities to confirm proper registration:</p>
+            <pre><code>agents-cli skills list</code></pre>
+            <p>Verify that the following core agentic skills are marked active: <code>google-agents-cli-scaffold</code>, <code>google-agents-cli-workflow</code>, <code>google-agents-cli-eval</code>, and <code>google-agents-cli-deploy</code>.</p>
+          </section>
+
+          <section id="module-4">
+            <h2>Module 4: Specifying the Agent in <code>plan.md</code></h2>
+            <p>To enable spec-driven agent development, you must capture design constraints cleanly in natural language before code generation occurs. Create a file named <code>plan.md</code> in your root directory with this markdown structure:</p>
+
+            <pre><code># Agent System Specification
+
+## 1. App Configuration
+- **App Name:** "app"
+
+## 2. Agent Details
+- **Agent Name:** "root_agent"
+- **Base Model:** "gemini-3.5-flash"
+- **Model Configurations:** 
+  - Retry limit: 3 attempts
+- **System Instruction:** "You are a helpful AI assistant designed to provide accurate and useful information."
+
+## 3. Tools / Functions (ADK 2.0 Python format)
+Equip the agent with these two custom tools:
+
+### Tool 1: get_weather
+- **Signature:** `get_weather(query: str) -> str`
+- **Description:** Simulates a web search for weather info.
+- **Logic:** If 'sf' or 'san francisco' is in the query case-insensitively, return "It's 60 degrees and foggy.", otherwise return "It's 90 degrees and sunny."
+
+### Tool 2: get_current_time
+- **Signature:** `get_current_time(query: str) -> str`
+- **Description:** Simulates getting the current time for a city.
+- **Logic:** If 'sf' or 'san francisco' is in the query case-insensitively, calculate the current time using the 'America/Los_Angeles' timezone and format it as '%Y-%m-%d %H:%M:%S %Z%z'. Otherwise, return "Sorry, I don't have timezone information for query: {query}."
+
+## 4. Architecture Mapping
+- Structure the generated Python output exactly following ADK 2.0 paradigms using the standard `from google.adk import Agent, App` structure.
+- Map "root_agent" as the primary workflow component inside the "app" App wrapper.</code></pre>
+          </section>
+
+          <section id="module-5">
+            <h2>Module 5: Code Scaffolding via Antigravity Prompting</h2>
+            <p>With your configuration spec saved in <code>plan.md</code>, invoke the agent generation skill directly through Antigravity.</p>
+
+            <h3>The Workspace Prompt</h3>
+            <p>Submit the following instruction to the Antigravity prompt interface:</p>
+            <pre><code>Build me the agent based on the specifications in plan.md</code></pre>
+
+            <h3>The Internal Chain-of-Thought (CoT) Breakdown</h3>
+            <p>Watch the Antigravity UI panel update in real-time as it parses the specification. It will activate <code>google-agents-cli-scaffold</code> and emit a structured execution sequence:</p>
+            <ol>
+              <li><strong>Parsing <code>plan.md</code> Check:</strong> Evaluates tool signatures, extract configurations, and target <code>gemini-3.5-flash</code>.</li>
+              <li><strong>Directory Creation:</strong> Runs <code>agents-cli create app --prototype --yes</code> behind the scenes to build standard layouts.</li>
+              <li><strong>ADK Code Output Generation:</strong> Automatically produces structural Python files (such as <code>main.py</code> or <code>agent.py</code>) implementing clean ADK 2.0 definitions (<code>Agent</code>, <code>App</code>).</li>
+              <li><strong>Dependency Management:</strong> Installs local virtual environment packages using <code>agents-cli install</code> via <code>uv</code> to resolve dependencies cleanly.</li>
+            </ol>
+          </section>
+
+          <section id="module-6">
+            <h2>Module 6: Testing with the ADK Playground Graph</h2>
+            <p>Before pushing code to cloud-hosted pipelines, test execution layouts locally.</p>
+
+            <h3>Launch Command</h3>
+            <p>Execute the playground runtime using your terminal or through a slash-command shortcut in Antigravity:</p>
+            <pre><code>agents-cli playground run</code></pre>
+            <p><em>(Alternatively, you can run <code>adk web .</code> depending on your active SDK layout).</em></p>
+
+            <h3>The Local Interface</h3>
+            <p>Open your browser to <code>http://localhost:8000</code> (or the custom port printed in the logs).</p>
+
+            <h3>Graph Analysis & Execution Verification</h3>
+            <ul>
+              <li>Use the web console to inspect the <strong>Workflow Topology Graph</strong>.</li>
+              <li>Ensure that the incoming request routes cleanly through <code>App</code>, hooks into the <code>root_agent</code> component node, and maps conditional exit edges to your two local Python tools (<code>get_weather</code> and <code>get_current_time</code>).</li>
+              <li>Send test queries like <code>"What is the weather in San Francisco?"</code> directly in the playground chat panel to verify operational trace routing and confirm that tool execution data streams back correctly.</li>
+            </ul>
+          </section>
+
+          <section id="module-7">
+            <h2>Module 7: Static Analysis & Agent Code Linting</h2>
+            <p>Agent applications require rigorous validation of tool schemas, model parameters, and dependency graphs. This is where linting comes in.</p>
+
+            <h3>The Purpose of Agent Linting</h3>
+            <p>Standard Python linters (like Ruff or Flake8) check for basic syntax or styling errors; an <strong>Agent Linter</strong> validates structural semantics. It ensures your tool docstrings match Python type signatures (crucial for accurate LLM function calling), verifies that model strings correspond to active Google GenAI endpoints, and checks that graph routing pathways do not contain dead ends or infinite loops.</p>
+
+            <h3>Execution Command</h3>
+            <p>Run the lint suite to verify compliance before moving forward:</p>
+            <pre><code>agents-cli lint</code></pre>
+            <p>If errors are encountered (e.g., missing parameter descriptions in docstrings), fix them immediately to ensure clean tool parsing by Gemini.</p>
+          </section>
+
+          <section id="module-8">
+            <h2>Module 8: Comprehensive Agent Evaluations (LLM-as-a-Judge)</h2>
+            <p>Testing an agent requires more than just standard software unit assertions. You need to evaluate the open-ended behavioral quality of its responses using an automation harness.</p>
+
+            <h3>Navigating the Test Structure</h3>
+            <p>The scaffold generated by <code>agents-cli</code> creates a dedicated evaluation subdirectory:</p>
+            <pre><code>tests/
+└── eval/
+    ├── eval_config.json      # LLM-as-a-Judge evaluation criteria definitions
+    └── evalsets/
+        └── root_agent.json   # Datasets containing input/gold-standard pairs</code></pre>
+
+            <h3>Configuring Evaluation Criteria</h3>
+            <p>Update <code>tests/eval/eval_config.json</code> to define your specific judgment metrics:</p>
+            <pre><code>{
+  "metrics": [
+    {
+      "name": "temporal_accuracy",
+      "definition": "Assess if the agent correctly extracts 'sf' or 'san francisco' and responds with the formatted timestamp containing PST/PDT indicators.",
+      "grading_rubric": "Score 1-5 based on string format correctness (%Y-%m-%d %H:%M:%S %Z%z)."
+    },
+    {
+      "name": "weather_tone_match",
+      "definition": "Verify that the agent uses the literal simulated response mapping specified in the rules without hallucinating complex external forecasts.",
+      "grading_rubric": "Score 1 or 0 based on matching exact phrases like 'foggy' or 'sunny'."
+    }
+  ]
+}</code></pre>
+
+            <h3>Running and Interpreting Evals</h3>
+            <p>Trigger the automated test run using the <code>google-agents-cli-eval</code> capability:</p>
+            <pre><code>agents-cli eval run</code></pre>
+            <p>The console will stream the execution of your test cases, displaying detailed metrics:</p>
+            <ul>
+              <li><strong>Process Output:</strong> Displays the raw conversation logs alongside the evaluation metrics parsed by the judge model.</li>
+              <li><strong>Results Analysis:</strong> Outputs a final performance report containing your metric scores (0-5 or pass/fail distributions). This makes it easy to spot systemic issues—like broken tool parsing or misaligned prompt instructions—before deploying your code.</li>
+            </ul>
+          </section>
+
+          <section id="module-9">
+            <h2>Module 9: Cloud Deployment to Agent Runtime</h2>
+            <p>Once your local evaluations pass, deploy your application to production cloud infrastructure.</p>
+
+            <h3>The Deployment Prompt</h3>
+            <p>Instruct your Antigravity developer assistant to provision resources:</p>
+            <pre><code>Deploy this agent to Agent Runtime in Google Cloud</code></pre>
+
+            <h3>Underlying Skill Activation</h3>
+            <p>Antigravity intercepts this request and invokes <code>google-agents-cli-deploy</code>. It converts your directory state into enterprise configuration layers, packages the Python environment, sets your target to Cloud Run or Vertex AI Reasoning Engines (<code>ReasoningEngine</code>), and uploads the workspace safely.</p>
+
+            <h3>Why Deploy to Agent Runtime on Google Cloud?</h3>
+            <p>Google Cloud's Agent Runtime provides a fully managed, enterprise-secure execution environment. It handles:</p>
+            <ul>
+              <li>Automatic scaling and zero-downtime version rolling.</li>
+              <li>Strict isolation via VPC Service Controls and secure sandbox environments.</li>
+              <li>Built-in session state persistence for long-running user conversations.</li>
+            </ul>
+
+            <h3>Production Observation & Monitoring</h3>
+            <p>Once live, you monitor your agent directly through the Google Cloud Console:</p>
+            <ul>
+              <li><strong>Cloud Trace:</strong> Tracks individual model calls, tool latencies, and inner function call durations via integrated OpenTelemetry.</li>
+              <li><strong>Cloud Logging:</strong> Captures structural execution payloads and debug events.</li>
+              <li><strong>Cloud Monitoring:</strong> Displays live dashboards monitoring token consumption, request error rates, and total invocation counts.</li>
+            </ul>
+          </section>
+
+          <section id="module-10">
+            <h2>Module 10: Enterprise App Registration</h2>
+            <p>The final phase makes your newly deployed agent available to end users across your business.</p>
+
+            <h3>The Registration Prompt</h3>
+            <p>Submit the final orchestration instruction to your interface:</p>
+            <pre><code>Register the deployed agent in our Gemini Enterprise App hub</code></pre>
+
+            <h3>Execution Mechanics</h3>
+            <p>Antigravity reads the deployed production endpoint metadata from your cloud project environment. Using your active skills, it interacts with the Gemini Enterprise administrative gateway, registers the live agent endpoint as an authorized tool or sub-agent plugin, and updates the application routing topology.</p>
+
+            <h3>The Operational Outcome</h3>
+            <p>Your custom agent is now securely accessible within your organization's enterprise ecosystem. It stands ready to handle end-user requests, process data through its specialized tools, and safely delegate tasks within your broader business workflows.</p>
+          </section>
+        </div>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2026 AgenticLearning Portal. All rights reserved.</p>
+      <p>Built with Vanilla HTML/CSS</p>
+    </div>
+  </footer>
+
+  <script>
+    // Simple active link tracker for TOC
+    window.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute('id');
+          if (entry.intersectionRatio > 0) {
+            document.querySelectorAll('.sidebar-toc a').forEach(a => {
+              a.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`.sidebar-toc a[href="#${id}"]`);
+            if (activeLink) activeLink.classList.add('active');
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -60% 0px'
+      });
+
+      // Track all sections that have an id
+      document.querySelectorAll('.article-body section').forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+
+</body>
+</html>
