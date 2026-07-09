@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Basic Spec Driven Design | Training Materials</title>
+  <meta name="description" content="Learn Spec Driven Design workflows with Antigravity, Agents-CLI, and Gemini Enterprise.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="../index.html" class="logo-link">
+        <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+        <span>AgenticLearning</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../resources.html" class="active">Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <div class="article-container">
+      
+      <!-- Sticky Table of Contents -->
+      <aside class="sidebar-toc">
+        <div class="toc-title">On this page</div>
+        <ul>
+          <li><a href="#intro" class="toc-link active">Introduction</a></li>
+          <li><a href="#workflow" class="toc-link">Workflow Overview</a></li>
+          <li><a href="#step1" class="toc-link">1. Scaffold Project</a></li>
+          <li><a href="#step2" class="toc-link">2. Implement Agent Logic</a></li>
+          <li><a href="#step3" class="toc-link">3. Run Evaluations</a></li>
+          <li><a href="#step4" class="toc-link">4. Deploy & Publish</a></li>
+          <li><a href="#best-practices" class="toc-link">Best Practices</a></li>
+        </ul>
+      </aside>
+
+      <!-- Article Content -->
+      <article class="article-content">
+        
+        <header class="article-header">
+          <div class="article-meta">
+            <span>Guide</span>
+            <span>•</span>
+            <span>10 Min Read</span>
+            <span>•</span>
+            <span>Updated July 2026</span>
+          </div>
+          <h1 class="article-title">Basic Spec Driven Design with Antigravity, Agents-CLI and Gemini Enterprise</h1>
+          <p class="article-desc">Learn how to design, build, and deploy high-quality AI agents starting with a specification-first methodology.</p>
+        </header>
+
+        <section class="article-body">
+          
+          <div id="intro">
+            <h2>Introduction</h2>
+            <p><strong>Spec Driven Design (SDD)</strong> is a methodology where you define the goals, constraints, tool contracts, and success criteria of your AI Agent in a formal specification *before* writing code. Designing spec-first prevents agent scope creep, reduces model hallucinations, and aligns development directly with automated evaluations.</p>
+            
+            <div class="callout callout-info">
+              <div class="callout-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                Why Spec-First?
+              </div>
+              <p>Just as API-first development uses OpenAPI specs to align frontend and backend teams, Spec-Driven Agent Design uses agent specifications to align your agent code, prompt engineering, and LLM-as-a-judge evaluation criteria.</p>
+            </div>
+          </div>
+
+          <div id="workflow">
+            <h2>Workflow Overview</h2>
+            <p>The standard development lifecycle when using the <code>agents-cli</code> and Antigravity comprises four distinct phases:</p>
+            
+            <img style="width: 100%; border: 1px solid var(--border-color); border-radius: var(--border-radius); margin: 1.5rem 0;" src="../assets/agent_spec_design.jpg" alt="Design workflow overview">
+            
+            <ol>
+              <li><strong>Scaffold:</strong> Initialize the agent structure with predefined templates.</li>
+              <li><strong>Build:</strong> Code the custom tools and define orchestration behaviors.</li>
+              <li><strong>Evaluate:</strong> Systematically test agent outputs using the Quality Flywheel.</li>
+              <li><strong>Deploy & Publish:</strong> Host the agent on Cloud Run or Agent Runtime and make it discoverable in Gemini Enterprise.</li>
+            </ol>
+          </div>
+
+          <div id="step1">
+            <h2>1. Scaffold your Project</h2>
+            <p>To start a new project, use the <code>agents-cli scaffold create</code> command. This command sets up the necessary directory structures, configuration manifests, and basic evaluation dataset files.</p>
+            
+            <pre><code><span class="token-comment"># Install agents-cli tool</span>
+uv tool install google-agents-cli
+
+<span class="token-comment"># Scaffold a new Agent project</span>
+agents-cli scaffold create my-first-agent</code></pre>
+
+            <div class="callout callout-tip">
+              <div class="callout-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                Enhance Existing Repos
+              </div>
+              <p>If you already have agent code files, run <code>agents-cli scaffold enhance .</code> to inject the standard config, evaluation runners, and CI/CD templates directly into your existing project.</p>
+            </div>
+          </div>
+
+          <div id="step2">
+            <h2>2. Implement Agent Logic</h2>
+            <p>Write your agent logic using the Agent Development Kit (ADK) Python SDK. In your main agent file (usually <code>agent.py</code>), define your agent instance, configure the model, and register tools.</p>
+            
+            <pre><code><span class="token-keyword">from</span> adk <span class="token-keyword">import</span> Agent, Tool
+
+<span class="token-comment"># Define a custom tool</span>
+<span class="token-keyword">def</span> <span class="token-function">get_current_weather</span>(location: <span class="token-keyword">str</span>) -> <span class="token-keyword">str</span>:
+    <span class="token-keyword">return</span> <span class="token-string">f"The weather in {location} is sunny, 72°F."</span>
+
+weather_tool = Tool(
+    name=<span class="token-string">"get_weather"</span>,
+    func=get_current_weather,
+    description=<span class="token-string">"Get weather updates for a specific location."</span>
+)
+
+<span class="token-comment"># Create the Agent</span>
+my_agent = Agent(
+    name=<span class="token-string">"WeatherAgent"</span>,
+    instruction=<span class="token-string">"You are an assistant. Use tools to provide weather info."</span>,
+    tools=[weather_tool],
+    model=<span class="token-string">"gemini-2.5-flash"</span>
+)
+</code></pre>
+
+            <h3>Quick Smoke Testing</h3>
+            <p>Instead of writing unit tests that make brittle assertions on natural language output, perform smoke tests directly in the terminal:</p>
+            <pre><code>agents-cli run <span class="token-string">"What's the weather in Seattle?"</span></code></pre>
+          </div>
+
+          <div id="step3">
+            <h2>3. Run Evaluations (The Quality Flywheel)</h2>
+            <p>Evaluation is the key to creating robust agent behaviors. <code>agents-cli</code> uses an LLM-as-a-judge system to grade agent outputs against concrete criteria defined in your dataset.</p>
+            
+            <div class="callout callout-warning">
+              <div class="callout-title">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
+                Avoid Brittle Pytests
+              </div>
+              <p>Never write standard pytests that check if the model's text response matches specific strings. Natural language is non-deterministic. Use the evaluation dataset framework instead.</p>
+            </div>
+
+            <p>Execute evaluation runs by executing:</p>
+            <pre><code>agents-cli eval run</code></pre>
+            <p>This runs the two underlying phases consecutively:</p>
+            <ul>
+              <li><strong>Generate:</strong> Sends your dataset prompts to the agent and records the execution traces.</li>
+              <li><strong>Grade:</strong> Runs judges against those traces to evaluate guidelines, accuracy, and tool usage.</li>
+            </ul>
+          </div>
+
+          <div id="step4">
+            <h2>4. Deploy & Publish to Gemini Enterprise</h2>
+            <p>When evaluations pass your target threshold, deploy your agent. The Agent Platform supports multiple deployment targets including Agent Runtime and Cloud Run.</p>
+            
+            <pre><code>agents-cli deploy</code></pre>
+
+            <h3>Registering the Agent</h3>
+            <p>After deployment, make the agent available in the Gemini Enterprise App. This registers it in the Agent Registry so other enterprise users (or other agents) can interact with it.</p>
+            <pre><code>agents-cli publish gemini-enterprise</code></pre>
+          </div>
+
+          <div id="best-practices">
+            <h2>Best Practices</h2>
+            <ul>
+              <li><strong>Isolate logic:</strong> Keep tools focused on simple input/output tasks.</li>
+              <li><strong>Iterate on Eval cases:</strong> Start with 2-3 simple evaluations and gradually expand to edge cases as you resolve bugs.</li>
+              <li><strong>Never change models arbitrarily:</strong> Keep models consistent with your evaluation environment to maintain predictable behaviors.</li>
+            </ul>
+          </div>
+
+        </section>
+      </article>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2026 AgenticLearning Portal. All rights reserved.</p>
+      <p>Built with Vanilla HTML/CSS</p>
+    </div>
+  </footer>
+
+  <!-- Vanilla Scroll Highlighting JS -->
+  <script>
+    window.addEventListener('DOMContentLoaded', () => {
+      const observer = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          const id = entry.target.getAttribute('id');
+          if (entry.intersectionRatio > 0) {
+            document.querySelectorAll('.sidebar-toc a').forEach(link => {
+              link.classList.remove('active');
+            });
+            const activeLink = document.querySelector(`.sidebar-toc a[href="#${id}"]`);
+            if (activeLink) {
+              activeLink.classList.add('active');
+            }
+          }
+        });
+      }, {
+        rootMargin: '-20% 0px -60% 0px'
+      });
+
+      // Track all sections that have an id
+      document.querySelectorAll('.article-body > div').forEach(section => {
+        observer.observe(section);
+      });
+    });
+  </script>
+
+</body>
+</html>

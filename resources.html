@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resources | Training Materials</title>
+  <meta name="description" content="Browse tutorials, guides, and specifications for designing AI Agents.">
+  
+  <!-- Google Fonts: Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <div class="nav-container">
+      <a href="index.html" class="logo-link">
+        <svg class="logo-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+          <polyline points="2 17 12 22 22 17"></polyline>
+          <polyline points="2 12 12 17 22 12"></polyline>
+        </svg>
+        <span>AgenticLearning</span>
+      </a>
+      <nav>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="resources.html" class="active">Resources</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main>
+    <section style="margin-bottom: 3rem;">
+      <h1 style="font-size: 2.5rem; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 0.5rem;">Training Resources</h1>
+      <p style="color: var(--text-secondary); font-size: 1.1rem; max-width: 700px;">Access tutorials, workflows, and references for developers. Filter, browse, and learn at your own pace.</p>
+    </section>
+
+    <!-- Resources Listing -->
+    <section>
+      <h2 class="section-title">All Resources</h2>
+      <div class="grid-cards">
+        
+        <!-- Resource 1 -->
+        <a href="resources/spec-driven-design.html" class="card">
+          <div class="card-tag">Guide • 10 Min Read</div>
+          <h3>Basic Spec Driven Design with Antigravity, Agents-CLI and Gemini Enterprise App</h3>
+          <p>A comprehensive walkthrough detailing how to architect agents starting from specification files. Covers setup, scaffolding, testing, and registration workflows.</p>
+          <div class="card-link">
+            <span>Read guide</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </div>
+        </a>
+
+        <!-- Placeholder card 1 -->
+        <div class="card" style="opacity: 0.7;">
+          <div class="card-tag">Reference • 5 Min Read</div>
+          <h3>Agent Development Kit (ADK) Python API Reference</h3>
+          <p>A reference guide detailing core ADK concepts: agents, tools, orchestration loops, callbacks, and context variables.</p>
+          <span style="color: var(--text-muted); font-size: 0.85rem; font-weight: 500; margin-top: auto;">Coming soon</span>
+        </div>
+
+        <!-- Placeholder card 2 -->
+        <div class="card" style="opacity: 0.7;">
+          <div class="card-tag">Workflow • 15 Min Read</div>
+          <h3>Automating Agent Evals with Quality Flywheel</h3>
+          <p>Setting up metrics-based evaluations using LLM-as-a-judge and automating the feedback loop using CI/CD runtimes.</p>
+          <span style="color: var(--text-muted); font-size: 0.85rem; font-weight: 500; margin-top: auto;">Coming soon</span>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-container">
+      <p>&copy; 2026 AgenticLearning Portal. All rights reserved.</p>
+      <p>Built with Vanilla HTML/CSS</p>
+    </div>
+  </footer>
+
+</body>
+</html>
