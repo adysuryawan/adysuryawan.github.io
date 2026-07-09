@@ -160,7 +160,17 @@
 
           <section id="module-4">
             <h2>Module 4: Specification Driven Development</h2>
-            <p>To enable spec-driven agent development, you must capture design constraints cleanly in natural language before code generation occurs. Create a file named <code>plan.md</code> in your root directory with this markdown structure:</p>
+            <p><strong>Specification Driven Development (SDD)</strong> is a software engineering paradigm that places structured specifications and AI agents at the core of the development lifecycle. Instead of using basic trial-and-error prompting (often called "prompt-and-patch"), SDD prioritizes meticulous requirement gathering, architectural design, and test planning. It borrows the design rigor of the traditional Waterfall model but integrates it into a modern, agile feedback loop. Human engineers act as system architects, writing high-fidelity specifications which the AI agents consume as a Single Source of Truth (SSOT) to generate and verify code.</p>
+
+            <h3>Writing the Agent Specification</h3>
+            <p>To enable spec-driven development, you capture all design constraints, environment parameters, and tool logic in natural language before code generation occurs.</p>
+
+            <div class="callout callout-info">
+              <div class="callout-title">Note</div>
+              <p>The sample <code>plan.md</code> shown below is intentionally oversimplified for instructional purposes. In real-world enterprise applications, you should provide highly detailed system specifications or Product Requirement Documents (PRDs). The more detail and context you provide—including edge cases, strict input/output formats, and logical constraints—the more context the AI agent has to generate highly accurate code, minimizing iterations.</p>
+            </div>
+
+            <p>Create a file named <code>plan.md</code> in your root directory with this markdown structure:</p>
 
             <pre><code># Agent System Specification
 
