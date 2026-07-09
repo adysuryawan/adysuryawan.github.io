@@ -34,7 +34,7 @@ body {
 }
 
 /* Layout */
-header {
+body > header {
   border-bottom: 1px solid var(--border-color);
   position: sticky;
   top: 0;
