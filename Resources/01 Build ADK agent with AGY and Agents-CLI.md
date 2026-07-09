@@ -56,6 +56,8 @@ While the developer's "inner loop" focuses on the local IDE and Antigravity work
 ### Repository & Multi-Environment Installation
 The developer tooling patterns can be discovered at `github.com/google/agents-cli`. The CLI abstracts complex deployment targets into clean local workflows.
 
+![Getting Started with agents-cli](../assets/agents_cli_install.png)
+
 #### Step 1: Install Prerequisite Package Tooling
 To ensure fast, isolated, and highly reproducible dependency structures, `agents-cli` utilizes `uv` as its primary underlying package manager.
 * **macOS/Linux:**
