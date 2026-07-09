@@ -360,6 +360,36 @@ Equip the agent with these two custom tools:
       document.querySelectorAll('.article-body section').forEach(section => {
         observer.observe(section);
       });
+
+      // Add copy buttons to code blocks
+      document.querySelectorAll('pre').forEach(preBlock => {
+        const button = document.createElement('button');
+        button.className = 'copy-button';
+        button.type = 'button';
+        button.innerText = 'Copy';
+
+        preBlock.appendChild(button);
+
+        button.addEventListener('click', () => {
+          const codeBlock = preBlock.querySelector('code');
+          if (!codeBlock) return;
+
+          const codeText = codeBlock.innerText;
+
+          navigator.clipboard.writeText(codeText).then(() => {
+            button.innerText = 'Copied!';
+            button.classList.add('copied');
+
+            setTimeout(() => {
+              button.innerText = 'Copy';
+              button.classList.remove('copied');
+            }, 2000);
+          }).catch(err => {
+            console.error('Failed to copy text: ', err);
+            button.innerText = 'Error';
+          });
+        });
+      });
     });
   </script>
 

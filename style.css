@@ -433,12 +433,39 @@ footer {
 
 /* Code Syntax Styling */
 pre {
+  position: relative;
   background-color: #1e1e2e;
   border-radius: var(--border-radius);
   padding: 1.25rem;
   overflow-x: auto;
   margin: 1.5rem 0;
   border: 1px solid #313244;
+}
+
+.copy-button {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  color: #cdd6f4;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: inherit;
+}
+
+.copy-button:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  color: #fff;
+}
+
+.copy-button.copied {
+  background-color: var(--accent-color);
+  border-color: var(--accent-color);
+  color: #fff;
 }
 
 code {
