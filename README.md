@@ -10,14 +10,16 @@ This site is built using modern, minimalist vanilla HTML/CSS. It features a spac
 
 ```text
 .
+├── Resources/
+│   └── 01 Build ADK agent with AGY and Agents-CLI.md # Raw markdown training guide
 ├── assets/
-│   └── agent_spec_design.jpg   # Custom tech illustration for hero banners
-├── resources/
-│   └── spec-driven-design.html # Step-by-step training guide for SDD
-├── index.html                  # Homepage (introduction and quick start)
-├── resources.html              # List of guides and reference articles
-├── style.css                   # Main stylesheet (clean light mode design)
-└── README.md                   # Project documentation
+│   └── agent_spec_design.jpg                         # Custom tech illustration for hero banners
+├── build-adk-agent-with-agy-and-agents-cli.html     # HTML page for the ADK agent training guide
+├── index.html                                        # Homepage (introduction and quick start)
+├── resources.html                                    # List of guides and reference articles
+├── style.css                                         # Main stylesheet (clean light mode design)
+├── CHANGELOG.md                                      # Record of updates and version history
+└── README.md                                         # Project documentation
 ```
 
 ## 🛠️ Tech Stack
