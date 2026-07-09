@@ -1,9 +1,9 @@
 # Spec-Driven AI Agent Development: A Complete Training Curriculum
-## Building Enterprise Agents with Google Antigravity, ADK 2.0, and Agents CLI
+## Building Enterprise Agents with Google Antigravity, ADK 2.0, and Agents-CLI
 
 ---
 
-## Module 1: Introduction to Gemini Antigravity & Agent Platform Cloud Setup
+## Module 1: Antigravity on Agent Platform
 
 This module establishes the foundational environment. Gemini Antigravity acts as your interactive natural language developer surface (available as a full desktop app or a lightweight terminal TUI via the Antigravity CLI), while Google Cloud's Agent Platform provides the enterprise infrastructure.
 
@@ -49,12 +49,12 @@ ADK 2.0 introduces breaking modular changes over 1.x, moving away from loose fun
 
 ---
 
-## Module 3: Enterprise Outer-Loop Lifecycle with Agents CLI
+## Module 3: Enterprise Lifecycle with Agents-CLI
 
-While the developer's "inner loop" focuses on the local IDE and Antigravity workspace prompting (writing code, testing quick snippets), enterprise readiness demands a robust **outer loop**. This handles multi-agent orchestration, continuous evaluation, deterministic building, zero-downtime deployments, and runtime observation at scale (the enterprise agentic harness).
+While the developer's "inner loop" focuses on the local IDE and Antigravity workspace prompting (writing code, testing quick snippets), enterprise readiness demands a robust development and operational lifecycle. This handles multi-agent orchestration, continuous evaluation, deterministic building, zero-downtime deployments, and runtime observation at scale (the enterprise agentic harness).
 
 ### Repository & Multi-Environment Installation
-The developer tooling patterns can be discovered at `github.com/google/agents-cli`. The CLI abstracts complex deployment targets into clean local workflows.
+The developer tooling patterns can be discovered at `github.com/google/agents-cli`. The Agents-CLI abstracts complex deployment targets into clean local workflows.
 
 ![Getting Started with agents-cli](../assets/agents_cli_install.png)
 
@@ -85,7 +85,7 @@ Verify that the following core agentic skills are marked active: `google-agents-
 
 ---
 
-## Module 4: Specifying the Agent in `plan.md`
+## Module 4: Specification Driven Development
 
 To enable spec-driven agent development, you must capture design constraints cleanly in natural language before code generation occurs. Create a file named `plan.md` in your root directory with this markdown structure:
 
@@ -122,7 +122,7 @@ Equip the agent with these two custom tools:
 
 ---
 
-## Module 5: Code Scaffolding via Antigravity Prompting
+## Module 5: Starting to Build Your AI Agent
 
 With your configuration spec saved in `plan.md`, invoke the agent generation skill directly through Antigravity.
 
@@ -141,19 +141,24 @@ Watch the Antigravity UI panel update in real-time as it parses the specificatio
 
 ---
 
-## Module 6: Testing with the ADK Playground Graph
+## Module 6: Agent Playground
 
-Before pushing code to cloud-hosted pipelines, test execution layouts locally.
+Before pushing code to cloud-hosted pipelines, test execution layouts locally using the Agent Playground. Instead of running commands in the terminal, you can ask Antigravity to start it for you.
 
-### Launch Command
-Execute the playground runtime using your terminal or through a slash-command shortcut in Antigravity:
-```bash
-agents-cli playground run
+### Prompting Antigravity
+Submit the following prompt in the Antigravity chat:
+```text
+Run the agent playground
 ```
-*(Alternatively, you can run `adk web .` depending on your active SDK layout).*
+or:
+```text
+Start the local ADK playground for this project
+```
+
+Antigravity will execute the underlying command (`agents-cli playground run` or `adk web .` depending on your SDK layout) and launch the playground.
 
 ### The Local Interface
-Open your browser to `http://localhost:8000` (or the custom port printed in the logs).
+Open the link provided by Antigravity or navigate in your browser to `http://localhost:8000` (or the custom port printed in the execution logs).
 
 ### Graph Analysis & Execution Verification
 * Use the web console to inspect the **Workflow Topology Graph**.
@@ -162,23 +167,25 @@ Open your browser to `http://localhost:8000` (or the custom port printed in the 
 
 ---
 
-## Module 7: Static Analysis & Agent Code Linting
+## Module 7: Linting
 
-Agent applications require rigorous validation of tool schemas, model parameters, and dependency graphs. This is where linting comes in.
+Agent applications require rigorous validation of tool schemas, model parameters, and dependency graphs. Standard Python linters (like Ruff or Flake8) check for basic syntax or styling errors; an **Agent Linter** validates structural semantics. It ensures your tool docstrings match Python type signatures (crucial for accurate LLM function calling), verifies that model strings correspond to active Google GenAI endpoints, and checks that graph routing pathways do not contain dead ends or infinite loops.
 
-### The Purpose of Agent Linting
-Standard Python linters (like Ruff or Flake8) check for basic syntax or styling errors; an **Agent Linter** validates structural semantics. It ensures your tool docstrings match Python type signatures (crucial for accurate LLM function calling), verifies that model strings correspond to active Google GenAI endpoints, and checks that graph routing pathways do not contain dead ends or infinite loops.
-
-### Execution Command
-Run the lint suite to verify compliance before moving forward:
-```bash
-agents-cli lint
+### Linting via Antigravity
+Instead of running command-line utilities, you can prompt Antigravity to run the linter and help you fix any issues:
+```text
+Run lint on this agent project
 ```
-If errors are encountered (e.g., missing parameter descriptions in docstrings), fix them immediately to ensure clean tool parsing by Gemini.
+or:
+```text
+Check the agent structure and lint the code
+```
+
+Antigravity will run the validation suite (calling `agents-cli lint` in the background). If it encounters any errors (e.g., missing parameter descriptions in docstrings or invalid model endpoints), Antigravity will present them to you and can help automatically resolve them.
 
 ---
 
-## Module 8: Comprehensive Agent Evaluations (LLM-as-a-Judge)
+## Module 8: Agent Evaluations
 
 Testing an agent requires more than just standard software unit assertions. You need to evaluate the open-ended behavioral quality of its responses using an automation harness.
 
@@ -211,29 +218,48 @@ Update `tests/eval/eval_config.json` to define your specific judgment metrics:
 }
 ```
 
-### Running and Interpreting Evals
-Trigger the automated test run using the `google-agents-cli-eval` capability:
-```bash
-agents-cli eval run
+### Running Evaluations via Antigravity
+Instead of manually triggering evaluations via the terminal, prompt Antigravity to run the evaluation suite for you.
+
+Submit one of the following prompts to Antigravity:
+```text
+Run agent evaluation
 ```
-The console will stream the execution of your test cases, displaying detailed metrics:
+or:
+```text
+Evaluate the root_agent using the configured eval set
+```
+
+Antigravity will run the evaluations (under the hood calling `agents-cli eval run`), process the results, and present them directly inside the chat window.
+
+The system will stream the execution of your test cases, displaying detailed metrics:
 * **Process Output:** Displays the raw conversation logs alongside the evaluation metrics parsed by the judge model.
 * **Results Analysis:** Outputs a final performance report containing your metric scores (0-5 or pass/fail distributions). This makes it easy to spot systemic issues—like broken tool parsing or misaligned prompt instructions—before deploying your code.
 
 ---
 
-## Module 9: Cloud Deployment to Agent Runtime
+## Module 9: Cloud Deployment
 
-Once your local evaluations pass, deploy your application to production cloud infrastructure.
+Once your local evaluations pass, you are ready to deploy your agent application to Google Cloud. Depending on your organization's infrastructure and compliance needs, you can choose from multiple deployment targets:
 
-### The Deployment Prompt
-Instruct your Antigravity developer assistant to provision resources:
+1. **Agent Runtime:** A fully managed, secure runtime built specifically for ADK agents, providing built-in session persistence, trace logging, and Vertex AI integrations. *(Recommended)*
+2. **Cloud Run:** Best for standard containerized deployments where you want custom scaling, HTTP entrypoints, and simple container configurations.
+3. **Google Kubernetes Engine (GKE):** Ideal for large-scale enterprise deployments that require strict VPC orchestration, multi-tenant clustering, and integration with existing Kubernetes workloads.
+
+### Sample Deployment to Agent Runtime
+To deploy your agent, simply instruct Antigravity via a prompt. Antigravity will handle the packaging, containerization, and provisioning.
+
+Submit the following prompt to Antigravity:
 ```text
-Deploy this agent to Agent Runtime in Google Cloud
+Deploy this agent to Agent Runtime on Google Cloud
 ```
 
 ### Underlying Skill Activation
-Antigravity intercepts this request and invokes `google-agents-cli-deploy`. It converts your directory state into enterprise configuration layers, packages the Python environment, sets your target to Cloud Run or Vertex AI Reasoning Engines (`ReasoningEngine`), and uploads the workspace safely.
+Antigravity intercepts this request and invokes the `google-agents-cli-deploy` skill. It:
+1. Validates your project files and configuration.
+2. Packages your Python virtual environment and dependencies.
+3. Compiles the deployment manifest pointing to your target cloud environment.
+4. Uploads and initializes the workspace on the Google Cloud Agent Runtime.
 
 ### Why Deploy to Agent Runtime on Google Cloud?
 Google Cloud's Agent Runtime provides a fully managed, enterprise-secure execution environment. It handles:
