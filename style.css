@@ -450,11 +450,13 @@ pre {
   border: 1px solid rgba(255, 255, 255, 0.15);
   border-radius: 4px;
   color: #cdd6f4;
-  padding: 0.25rem 0.5rem;
-  font-size: 0.75rem;
   cursor: pointer;
   transition: var(--transition);
-  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
 }
 
 .copy-button:hover {
