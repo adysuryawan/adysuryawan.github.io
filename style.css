@@ -261,61 +261,6 @@ footer {
   gap: 0.25rem;
 }
 
-/* Quick Start / Featured list */
-.featured-section {
-  background-color: var(--bg-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: var(--border-radius);
-  padding: 3rem;
-  margin-top: 4rem;
-}
-
-.featured-grid {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 3rem;
-}
-
-.featured-info h2 {
-  font-size: 2rem;
-  font-weight: 750;
-  margin-bottom: 1rem;
-  letter-spacing: -0.03em;
-}
-
-.featured-info p {
-  color: var(--text-secondary);
-}
-
-.featured-steps {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-}
-
-.step-item {
-  display: flex;
-  gap: 1rem;
-}
-
-.step-num {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--accent-color);
-  line-height: 1;
-}
-
-.step-content h4 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 0.25rem;
-}
-
-.step-content p {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-}
-
 /* Article / Documentation Layout */
 .article-container {
   display: grid;
